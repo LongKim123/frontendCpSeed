@@ -55,7 +55,7 @@
                 <b> Địa chỉ:</b>
                 <span
                   ><a href="#">
-                    Số 1 Lương Định Của, Phương Mai, Đống Đa, Hà Nội</a
+                   {{getConfigValueFromSettingTable('Address_cp')}}</a
                   ></span
                 >
               </p>
@@ -74,7 +74,7 @@
                     /></svg
                 ></span>
                 <b> Điện thoại:</b>
-                <span><a href="#"> (024)-38523294</a></span>
+                <span><a href="#"> {{getConfigValueFromSettingTable('phone_contact')}}</a></span>
               </p>
             </li>
             <li class="list-group-item border-0 p-0">
@@ -91,7 +91,7 @@
                     /></svg
                 ></span>
                 <b> Email:</b>
-                <span><a href="#"> nsc@vinaseed.com.vn</a></span>
+                <span><a href="#">  {{getConfigValueFromSettingTable('email_link')}}</a></span>
               </p>
             </li>
             <li class="list-group-item border-0 p-0">
@@ -108,7 +108,7 @@
                     /></svg
                 ></span>
                 <b> Fax:</b>
-                <span><a href="#"> (024)-38527996</a></span>
+                <span><a href="#"> {{getConfigValueFromSettingTable('fax_links')}}</a></span>
               </p>
             </li>
           </ul>
@@ -152,7 +152,7 @@
                 </div>
               </div>
             </div>
-            <div class="p-2 bd-highlight">© 2021 Cpseed.com.vn</div>
+            <div class="p-2 bd-highlight">© 2021  {{getConfigValueFromSettingTable('website_link')}}</div>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
             <ul class="sf-menu">
               @foreach($menuLimit as $menuParent)
               <li class="item--menu">
-                <a class="item--menu-1" href="/vi/gioi-thieu/">{{$menuParent->name}}</a>
+                <a class="item--menu-1" href="">{{$menuParent->name}}</a>
                 <ul class="menu-children-lv2 mt-3">
                   @if($menuParent->menuChildrent->count())
                   @foreach($menuParent->menuChildrent as $menuChild2 )

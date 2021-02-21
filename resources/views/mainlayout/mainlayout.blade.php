@@ -36,8 +36,8 @@
     />
     <link rel="stylesheet" href="{{asset('swiper/autoplay/wp-autoplay.css')}}" />
     <link rel="stylesheet" href="{{asset('mainlayout/css/introduce.css')}}" />
-
-    <title>Menu</title>
+      @yield('css')
+      @yield('tittle')
   </head>
 
   <body>
@@ -78,7 +78,7 @@
       </div>
     </div>
     @include('partial.slider')
-    @include('partial.introduction')
+    @yield('content')
     @include('partial.map')
     @include('partial.footer')
 
@@ -87,6 +87,7 @@
         jQuery("ul.sf-menu").superfish();
       });
     </script>
+     @yield('js')
     <script src="{{asset('show-more/show-more-para.js')}}"></script>
     <script src="{{asset('superfish/js/superfish.js')}}"></script>
     
@@ -97,7 +98,8 @@
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
       crossorigin="anonymous"
     ></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{{asset('swiper/autoplay/wp-autoplay.js')}}"></script>
+    <!-- <script src="{{asset('swiper/autoplay/wp-autoplay.js')}}"></script> -->
   </body>
 </html>

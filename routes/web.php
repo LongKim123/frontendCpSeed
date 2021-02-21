@@ -16,4 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('mainlayout.mainlayout');
 });
+Route::get('chi-tiet-san-pham/{id}','ProductController@detail_product');
 Route::get('trang-chu','HomeController@index');
+Route::get('gioi-thieu','HomeController@introduction')->name('gioi-thieu');
