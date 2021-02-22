@@ -14,8 +14,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('mainlayout.mainlayout');
+    return view('layoutLogin.login');
 });
+
+	Route::prefix('dang-ky')->group(function () {
+    Route::post('/store',[	
+    	'as'=>'dang-ky.store',
+    	'uses'=>'LoginController@store'
+      
+      ]);
+    Route::get('/',[	
+    	'as'=>'dang-ky',
+    	'uses'=>'LoginController@index'
+      
+      ]);
+     Route::post('/login',[	
+    	'as'=>'dang-nhap',
+    	'uses'=>'LoginController@success'
+      
+      ]);
+   
+});
+//Route::post('/dang-nhap','LoginController@success');
 Route::get('chi-tiet-san-pham/{id}','ProductController@detail_product');
 Route::get('trang-chu','HomeController@index');
 Route::get('gioi-thieu','HomeController@introduction')->name('gioi-thieu');

@@ -61,7 +61,7 @@ body {
     margin-bottom: 2em;
     font-weight: 400;
 }
-.sub-main-w3 input[type="email"], .sub-main-w3 input[type="password"] {
+.sub-main-w3 input[type="text"] ,.sub-main-w3 input[type="email"], .sub-main-w3 input[type="password"] {
     outline: none;
     font-size: 1em;
     padding: 1em 3em 1em 1em;
@@ -134,6 +134,7 @@ span.icon1, span.icon2{
 	-moz-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
+
 /*--//main--*/
 
 /*--footer--*/
