@@ -17,6 +17,7 @@
        
          
          @foreach($products as $productItem)
+         
           <div class="swiper-slide slider-2">
             <div class="bd-highlight d-flex flex-column shadow">
               <div class="bd-highlight slider-2__1">
@@ -29,7 +30,22 @@
                 <p>{{$productItem->name}}</p>
               </div>
 
+
               <div class="bd-highlight slider-2__3">
+                <form>
+                    @csrf
+                    <input type="hidden" name="" value="{{$productItem->id}}" class="cart_product_id_{{$productItem->id}}">
+
+                    <input type="hidden" name="" value="{{$productItem->name}}" class="cart_product_name_{{$productItem->id}}">
+
+                    <input type="hidden" name="" value="{{$productItem->feature_image_path}}" class="cart_product_image_{{$productItem->id}}">
+
+                    <input type="hidden" name="" value="{{$productItem->price}}" class="cart_product_price_{{$productItem->id}}">
+
+                    <input type="hidden" name="" value="1" class="cart_product_qty_{{$productItem->id}}">
+                                                      
+                    <button type="button" data-id="{{$productItem->id}}" class="btn btn-default add-to-cart" name="add-to-cart">Thêm giỏ hàng</button>                                     
+                    </form>
                 <a href="{{URL::to('chi-tiet-san-pham',['id'=>$productItem->id])}}">{{$productItem->name}}</a>
               </div>
             </div>

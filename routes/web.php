@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('layoutLogin.login');
 });
 
+
+
+
 	Route::prefix('dang-ky')->group(function () {
     Route::post('/store',[	
     	'as'=>'dang-ky.store',
@@ -35,6 +38,9 @@ Route::get('/', function () {
       ]);
    
 });
+//Route::get('/show-cart','CartController@show_cart');
+Route::post('/add-to-cart','CartController@add_to_cart');
+Route::get('cart-shopping','CartController@show_cart');
 //Route::post('/dang-nhap','LoginController@success');
 Route::get('chi-tiet-san-pham/{id}','ProductController@detail_product');
 Route::get('trang-chu','HomeController@index');

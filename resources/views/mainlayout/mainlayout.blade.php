@@ -12,10 +12,12 @@
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
       crossorigin="anonymous"
     />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
    
 
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" href="{{asset('cart/css/sweetalert.css')}}" />
     <link
       href="https://fonts.googleapis.com/css2?family=Courgette&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
@@ -81,13 +83,78 @@
     @yield('content')
     @include('partial.map')
     @include('partial.footer')
+     <script type="text/javascript" >
+           $(document).ready(function(){
+       
+            $('.add-to-cart').click(function(){
+                var id=$(this).data('id');
+                var cart_product_id=$('.cart_product_id_'+id).val();
+                var cart_product_name=$('.cart_product_name_'+id).val();
+                var cart_product_price=$('.cart_product_price_'+id).val();
+                var cart_product_image=$('.cart_product_image_'+id).val();
+                var cart_product_qty=$('.cart_product_qty_'+id).val();
+                var _token=$('input[name="_token"]').val();
+                
+                $.ajax({
+                    url:'{{URL('/add-to-cart')}}',
+                    
+                    
+                    method:'POST',
+                    data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
+                    success:function(){
+                        swal({
+                            title:"Bạn đã thêm sản phẩm thành công",
+                            text:"bạn có thể tiếp tục mua hàng hoặc tới giỏ hàng thanh toán",
+                            showCancelButton:true,
+                            cancelButtonText:"Xem tiếp",
+                            confirmButtonClass:"btn-success",
+                            confirmButtonText:"Đi đến giỏ hàng",
+                            closeOnConfirm:false
+                        },
+                        function(){
+                            window.location.href="{{URL::to('/cart-shopping')}}";
+                        });
 
+                        
+                    }
+
+                });
+                // $.ajax({
+                    
+                //     url:'{{URL('/ajaxweb')}}',
+                    
+                //     method:'POST',
+                //     data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
+                //     success:function(){
+                //         swal({
+                //             title:"Bạn đã thêm sản phẩm thành công",
+                //             text:"bạn có thể tiếp tục mua hàng hoặc tới giỏ hàng thanh toán",
+                //             showCancelButton:true,
+                //             cancelButtonText:"Xem tiếp",
+                //             confirmButtonClass:"btn-success",
+                //             confirmButtonText:"Đi đến giỏ hàng",
+                //             closeOnConfirm:false
+                //         },
+                //         function(){
+                //             window.location.href="{{URL::to('/gio-hang')}}";
+                //         });
+
+                        
+                //     }
+
+                // });
+                
+
+            });
+    });
+  </script>
     <script>
       jQuery(document).ready(function () {
         jQuery("ul.sf-menu").superfish();
       });
     </script>
      @yield('js')
+     <script src="{{asset('cart/js/sweetalert.min.js')}}"></script>
     <script src="{{asset('show-more/show-more-para.js')}}"></script>
     <script src="{{asset('superfish/js/superfish.js')}}"></script>
     
@@ -98,6 +165,7 @@
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
       crossorigin="anonymous"
     ></script>
+    
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script src="{{asset('swiper/autoplay/wp-autoplay.js')}}"></script> -->
