@@ -31,6 +31,9 @@
 
         <div class="row">
           <div class="col-sm-8 bg-white br-20 shadow-sm">
+          	
+          	<form action="{{URL::to('/update-cart')}}" method="POST">
+				@csrf
             <!-- Cart Items -->
             @php
 				$total=0;
@@ -41,7 +44,8 @@
 					$subtotal=$cart['product_price']*$cart['product_qty'];
 					$total+=$subtotal;
 				@endphp
-            <div class="d-flex flex-row bd-highlight mb-3 mt-3">
+			
+			<div  class="d-flex flex-row bd-highlight mb-3 mt-3">
               <div
                 class="bd-highlight"
                 style="margin-right: 20px; margin-left: 20px"
@@ -63,7 +67,7 @@
                     <p>{{$cart['product_name']}}</p>
                   </div>
                   <div class="bd-highlight">
-                    <a href="#" class="text-decoration-none fs-7">Xoá</a>
+                    <a  data-url="{{route('delete-item-cart',['id'=>$cart['session_id']])}}" class="text-decoration-none action_delete">Xoá</a>
                   </div>
                 </div>
               </div>
@@ -93,24 +97,19 @@
                 <div class="d-flex flex-row bd-highlight">
                   <div class="bd-highlight">
                     <div class="input-group mb-3">
-                      <span
-                        class="input-group-text qty-decrease"
-                        id="basic-addon1"
-                        >-</span
-                      >
+
+                     
                       <input
-                        type="number"
+                      
+                        type="text"
                         class="form-control qty-input border p-2"
-                        
+                        name="cart_qty[{{$cart['session_id']}}]"
                         value="{{$cart['product_qty']}}"
                         aria-label="Username"
                         aria-describedby="basic-addon1"
+                        min="0"
                       />
-                      <span
-                        class="input-group-text qty-increase"
-                        id="basic-addon1"
-                        >+</span
-                      >
+                     
                     </div>
                   </div>
                 </div>
@@ -137,11 +136,28 @@
                 </div>
               </div>
             </div>
+			
+           
             @endforeach
             @else
 					<h2 style="color:red;"> Giỏ hàng trống</h2>
             @endif
             <!-- Cart Items -->
+             <button
+              type="submit"
+              class="btn btn-success shadow-sm"
+              style="width: 15%"
+            >
+              Cập nhật giỏ hàng
+            </button>
+            <button
+              type="button"
+              class="btn btn-success shadow-sm"
+              style="width: 15%"
+            >
+              <a style="color: white" href="{{URL::to('gioi-thieu')}}">Tiếp tục mua hàng</a>
+            </button>
+            </form>
           </div>
           <div class="col-sm-4" style="height: 100vh">
             <div
@@ -202,4 +218,26 @@
           </div>
         </div>
       </div>
+@endsection
+@section('js')
+<script>
+     var proQty = $('.input-group');
+	proQty.prepend('<span class="dec qtybtn qty-increase input-group-text qty-decrease">-</span>');
+	proQty.append('<span class="inc qtybtn input-group-text qty-decrease ">+</span>');
+	proQty.on('click', '.qtybtn', function () {
+		var $button = $(this);
+		var oldValue = $button.parent().find('input').val();
+		if ($button.hasClass('inc')) {
+			var newVal = parseFloat(oldValue) + 1;
+		} else {
+			// Don't allow decrementing below zero
+			if (oldValue > 0) {
+				var newVal = parseFloat(oldValue) - 1;
+			} else {
+				newVal = 0;
+			}
+		}
+		$button.parent().find('input').val(newVal);
+	});
+ </script>
 @endsection

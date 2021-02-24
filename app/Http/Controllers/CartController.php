@@ -16,9 +16,31 @@ class CartController extends Controller
 
        return view('content.shopping_cart.cart',compact('sliders','menuLimit'));
     }
-    
+    public function delete_item_cart($id){
+    	$cart=Session::get('cart');
+        // echo'<pre>';
+        //     print_r($cart);
+        // echo'</pre>';
+        if($cart==true){
+            foreach ($cart as $key => $value) {
+                if($value['session_id']==$id){
+                    unset($cart[$key]);
+                }
+                # code...
+            }
+            Session::put('cart',$cart);
+            return response()->json([
+    			'code'=>200,
+    			'message'=>'success'],200);
+
+        }
+        else{
+             return Redirect()->back()->with('mesage','xóa sản phẩm thất bại');
+
+        }
+    }
     public function add_to_cart(Request $request){
-    	$data=$request->all();
+    	
     	$data=$request->all();
     	$session_id=substr(md5(microtime()),rand(0,26),5);
     	$cart=Session::get('cart');
@@ -60,6 +82,24 @@ class CartController extends Controller
     	}
     	 Session::put('cart',$cart);
     	 Session::save();
+
+    }
+     public function update_cart(Request $request){
+        $data=$request->all();
+        $cart=Session::get('cart');
+        if($cart==true){
+            foreach ($data['cart_qty'] as $key => $qty) {
+                foreach($cart as $session=>$val)
+                {
+                    if($val['session_id']==$key){
+                        $cart[$session]['product_qty']=$qty;
+                    }
+                }
+                # code...
+            }
+            Session::put('cart',$cart);
+            return Redirect()->back()->with('mesage','Cập nhật sản phẩm thành công');
+        }
 
     }
 }

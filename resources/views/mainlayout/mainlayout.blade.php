@@ -148,6 +148,50 @@
             });
     });
   </script>
+ <script>
+  
+ </script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script>
+    function actionDelete(event){
+  event.preventDefault();
+  let urlRequest=$(this).data('url');
+  let that =$(this);
+  Swal.fire({
+     title: 'Bạn có chắc?',
+    text: "Muốn Xóa Sản Phẩm!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type:'GET',
+        url:urlRequest,
+        success: function(data){
+          if(data.code == 200){
+            that.parent().parent().parent().parent().remove();
+            Swal.fire(
+              'Xóa Sản Phẩm Thành Công!',
+              
+            )
+          }
+        },
+        err: function(){
+
+        }
+      })
+      
+    }
+  })
+}
+
+$(function(){
+  $(document).on('click','.action_delete',actionDelete);
+});
+  </script>
     <script>
       jQuery(document).ready(function () {
         jQuery("ul.sf-menu").superfish();
