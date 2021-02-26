@@ -47,3 +47,7 @@ Route::get('delete-item-cart/{id}','CartController@delete_item_cart')->name('del
 Route::get('chi-tiet-san-pham/{id}','ProductController@detail_product');
 Route::get('trang-chu','HomeController@index');
 Route::get('gioi-thieu','HomeController@introduction')->name('gioi-thieu');
+
+
+//sort
+Route::get('product-listing','ProductController@product_listing');

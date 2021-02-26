@@ -21,4 +21,9 @@ class ProductController extends Controller
 
        return view('content.detail_product.detail_product',compact('sliders','menuLimit','product','productImages','related','url_pro'));
     }
+    public function product_listing(){
+        $sliders =Slider::latest()->get();
+        $menuLimit=Menu::where('parent_id',0)->get();
+        return view('content.sort.sort',compact('sliders','menuLimit'));
+    }
 }
