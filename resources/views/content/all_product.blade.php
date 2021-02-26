@@ -5,6 +5,7 @@
 @section('css')
  <link rel="stylesheet" href="{{asset('swiper/navigation-per-view.css')}}" />
   <link rel="stylesheet" href="{{asset('view_all/css/view-all.css')}}" />
+  
 @endsection
  @section('content')
 

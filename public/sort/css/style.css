@@ -986,48 +986,68 @@ body {
 
 .ps-list--checked li {
   margin-bottom: 20px; }
-  .ps-list--checked li a {
-    position: relative;
-    display: block;
-    padding-left: 30px;
-    font-size: 14px;
-    color: #313131; }
-    .ps-list--checked li a:before {
-      display: inline-block;
+  .container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+  
+       .ps-list--checked  li .container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0; }
+      .container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+      .checkmark {
       position: absolute;
       top: 0;
       left: 0;
-      content: '';
-      width: 20px;
-      height: 20px;
-      border: solid 1px #8d8d8d;
-      -webkit-transition: all 0.4s ease;
-      -moz-transition: all 0.4s ease;
-      transition: all 0.4s ease; }
-    .ps-list--checked li a:after {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      top: 4px;
-      left: 8px;
-      color: #fff;
-      width: 6px;
-      height: 10px;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      -webkit-transform: rotate(45deg);
-      -moz-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      -o-transform: rotate(45deg);
-      transform: rotate(45deg);
-      visibility: hidden;
-      opacity: 0; }
-    .ps-list--checked li a:hover:before {
-      background-color: #2AC37D;
-      border-color: #2AC37D; }
-    .ps-list--checked li a:hover:after {
-      visibility: visible;
-      opacity: 1; }
+      height: 25px;
+      width: 25px;
+      background-color: #eee;
+    }
+    /* On mouse-over, add a grey background color */
+
+
+/* When the checkbox is checked, add a blue background */
+.ps-list--checked li .container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.ps-list--checked li .container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Show the checkmark when checked */
+.ps-list--checked li .container input:checked ~ .checkmark:after {
+  display: block;
+}
+   
   .ps-list--checked li.current a:before {
     background-color: #2AC37D;
     border-color: #2AC37D; }
