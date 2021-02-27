@@ -52,3 +52,4 @@ Route::get('gioi-thieu','HomeController@introduction')->name('gioi-thieu');
 //sort
 Route::get('product-listing','ProductController@product_listing');
 Route::get('/sort-di','ProductController@sort_di');
+Route::get('/sort-cc','ProductController@sort_cc');

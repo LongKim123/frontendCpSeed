@@ -30,20 +30,16 @@ class ProductController extends Controller
        return view('content.detail_product.detail_product',compact('sliders','menuLimit','product','productImages','related','url_pro'));
     }
     public function product_listing(){
-
+        $products=DB::table('products')->get();
         $categorylist=Category::where('parent_id',11)->get();
         $tag_name= DB::table('products')->join('categories','categories.id','=','products.category_id')
         ->join('product_tags','product_tags.product_id','=','products.id')
         ->join('tags','product_tags.tag_id','=','tags.id')
         ->where('parent_id',11)->get();
-
-
-        
-        
-        
         $sliders =Slider::latest()->get();
         $menuLimit=Menu::where('parent_id',0)->get();
-        return view('content.sort.sort',compact('sliders','menuLimit','categorylist','tag_name'));
+        
+         return view('content.sort.sort',compact('sliders','menuLimit','categorylist','tag_name','products'));
     }
     public function sort_di(Request $request){
       
