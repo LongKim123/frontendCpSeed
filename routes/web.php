@@ -53,3 +53,4 @@ Route::get('gioi-thieu','HomeController@introduction')->name('gioi-thieu');
 Route::get('product-listing','ProductController@product_listing');
 Route::get('/sort-di','ProductController@sort_di');
 Route::get('/checkout','CheckoutController@index');
+Route::post('save-checkout','CheckoutController@save_checkout');
