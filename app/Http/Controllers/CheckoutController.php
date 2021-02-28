@@ -35,7 +35,11 @@ class CheckoutController extends Controller
     	$datapayment=array();
     	$datapayment['method']=$request->payment;
     	$datapayment['status']=1;
-    	
+    	 $dataCustomerUpdate=[
+            'phone_number'=>$request->phone_number,
+            'address'=>$request->address
+        ];
+        Customer::find(Session::get('id'))->update($dataCustomerUpdate);
 
     	$payment_id=Payment::insertGetId($datapayment);
     	//insert order

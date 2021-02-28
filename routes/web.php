@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('layoutLogin.login');
-});
+})->name('/');
 
 Route::get('log-out','LoginController@logout');
 Route::get('/login-facebook','LoginController@login_facebook');

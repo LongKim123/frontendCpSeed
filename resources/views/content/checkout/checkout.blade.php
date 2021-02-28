@@ -37,12 +37,12 @@
                             <div class="form-group form-group--inline">
                               <label>Phone<span></span>
                               </label>
-                              <input class="form-control" value="{{$infor_user->phone_number}}" type="text">
+                              <input class="form-control" name="phone_number" value="{{$infor_user->phone_number}}" type="text">
                             </div>
                             <div class="form-group form-group--inline">
                               <label>Address<span></span>
                               </label>
-                              <input  value="{{$infor_user->address}}" class="form-control" type="text">
+                              <input name="address" value="{{$infor_user->address}}" class="form-control" type="text">
                             </div>
                       <div class="form-group">
                         <div class="ps-checkbox">

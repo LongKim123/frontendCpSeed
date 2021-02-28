@@ -58,6 +58,7 @@ class LoginController extends Controller
     public function logout(){
         Session::put('id',null);
           Session::put('name',null);
+          return redirect()->route('/');
     }
 
     public function login_facebook(){
