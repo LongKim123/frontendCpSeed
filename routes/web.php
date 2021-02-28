@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('log-out','LoginController@logout');
+Route::get('/login-facebook','LoginController@login_facebook');
+Route::get('/login/callback','LoginController@callback_facebook');
 
 
 	Route::prefix('dang-ky')->group(function () {

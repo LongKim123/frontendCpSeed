@@ -50,7 +50,7 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 						<input  placeholder="Password" name="password" class="pass" type="password" required="">
 						<span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span><br>
 						<div class="sub-w3l">
-					<a class="btn-social-fb" href="#" role="button"
+					<a class="btn-social-fb" href="{{URL::to('/login-facebook')}}" role="button"
                     ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="50"

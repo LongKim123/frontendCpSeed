@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use Session;
+use App\Social; 
+use Socialite;
+
+
 use Illuminate\Support\Facades\Redirect;
 class LoginController extends Controller
 {
@@ -55,4 +59,51 @@ class LoginController extends Controller
         Session::put('id',null);
           Session::put('name',null);
     }
+
+    public function login_facebook(){
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function callback_facebook(){
+        $provider = Socialite::driver('facebook')->user();
+        $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
+        if($account){
+            //login in vao trang quan tri  
+            $account_name = Customer::where('id',$account->user)->first();
+            
+            Session::put('name',$account_name->name);
+            Session::put('id',$account_name->id);
+            return redirect('gioi-thieu')->with('message', 'Đăng nhập tài khoản Facebook thành công');
+        }else{
+
+            $long = new Social([
+                'provider_user_id' => $provider->getId(),
+                'provider' => 'facebook'
+            ]);
+
+            $orang = Customer::where('email',$provider->getEmail())->first();
+
+            if(!$orang){
+                $orang = Customer::create([
+                    'name' => $provider->getName(),
+                    'email' => $provider->getEmail(),
+                    'password'=>'',
+                    'address'=>'',
+                    'phone_number'=>''
+
+                    
+
+                ]);
+            }
+            $long->login()->associate($orang);
+            $long->save();
+
+            $account_name = Customer::where('id',$account->user)->first();
+
+            Session::put('name',$account_name->admin_name);
+            Session::put('id',$account_name->admin_id);
+            return redirect('gioi-thieu')->with('message', 'Đăng nhập tài khoản Facebook thành công');
+        } 
+    }
+
 }
