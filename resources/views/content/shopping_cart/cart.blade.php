@@ -15,15 +15,17 @@
             </div>
             <div class="bd-highlight">
             @php
-				$total_pro=0;
-			@endphp
+				      $total_pro=0;
+			     @endphp
+              @if(Session::get('cart'))
               @foreach(Session::get('cart') as $key=>$cart)
-				@php
-				$total_pro=$total_pro+1;
-					
-				@endphp
-				
-				@endforeach
+				    @php
+      				$total_pro=$total_pro+1;
+      					
+      				@endphp
+      				
+      		@endforeach
+          @endif
 				<p class="mt-1" style="margin-left: 20px">( {{$total_pro}} Sản Phẩm )</p>
             </div>
           </div>
@@ -143,20 +145,22 @@
 					<h2 style="color:red;"> Giỏ hàng trống</h2>
             @endif
             <!-- Cart Items -->
-             <button
-              type="submit"
-              class="btn btn-success shadow-sm"
-              style="width: 15%"
-            >
-              Cập nhật giỏ hàng
-            </button>
-            <button
-              type="button"
-              class="btn btn-success shadow-sm"
-              style="width: 15%"
-            >
-              <a style="color: white" href="{{URL::to('gioi-thieu')}}">Tiếp tục mua hàng</a>
-            </button>
+            @if(Session::get('cart'))
+                 <button
+                  type="submit"
+                  class="btn btn-success shadow-sm"
+                  style="width: 15%"
+                >
+                  Cập nhật giỏ hàng
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success shadow-sm"
+                  style="width: 15%"
+                >
+                  <a style="color: white" href="{{URL::to('gioi-thieu')}}">Tiếp tục mua hàng</a>
+                </button>
+            @endif
             </form>
           </div>
           <div class="col-sm-4" style="height: 100vh">
@@ -182,7 +186,7 @@
                     <p class="fst-italic text-secondary">Giảm giá</p>
                   </div>
                   <div class="p-2 bd-highlight" style="width: 50%">
-                    <p>-1.999.000đ</p>
+                    <p>-0đ</p>
                   </div>
                 </div>
               </div>
@@ -208,13 +212,16 @@
                 </div>
               </div>
             </div>
+            @if(Session::get('cart'))
             <button
               type="button"
               class="btn btn-danger shadow-sm"
               style="width: 100%"
             >
-              Mua Ngay
+
+              <a href="{{URL::to('/checkout')}}">Mua Ngay</a>
             </button>
+            @endif
           </div>
         </div>
       </div>

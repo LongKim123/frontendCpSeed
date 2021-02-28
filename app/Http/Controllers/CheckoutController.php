@@ -48,6 +48,7 @@ class CheckoutController extends Controller
     	}
     	
     	$order_data=array();
+    	$order_data['created_at'] =new \DateTime();
     	$order_data['customer_id']=Session::get('id');
     	$order_data['shipping_id']=1;
     	$order_data['payment_id']=$payment_id;
@@ -69,7 +70,7 @@ class CheckoutController extends Controller
     if($thanhcong){
         Session::put('cart',null);
     }
-    return redirect()->route('trang-chu');
+    return redirect()->route('gioi-thieu');
 
 
     }

@@ -145,23 +145,7 @@
           
           </aside>
 
-             <aside class="ps-widget--sidebar ps-widget--category">
-            <div class="ps-widget__header">
-              <h3>TAGS</h3>
-            </div>
-            <div class="ps-widget__content">
-              <ul class="ps-list--checked">
-               @foreach($tag_name as $tagItem)
-                <li><label class="container">{{$tagItem->name}}
-                  <input type="checkbox" id="btn1" value="{{$cateItem->id}}" class="brand">
-                  <span class="checkmark"></span>
-                </label></li>
-                @endforeach
-
-                
-              </ul>
-            </div>
-          </aside>
+           
           
           
         
@@ -173,20 +157,20 @@
  <script language="javascript">
  
             document.getElementById("btn1").onclick = function () {
-              if($(this).is(":checked")){
+              
                     document.getElementById("content").style.display = 'none';
-                }
+                
                 
             };
              document.getElementById("btn2").onclick = function () {
-                if($(this).is(":checked")){
+                
                     document.getElementById("content").style.display = 'none';
-                }
+                
             };
              document.getElementById("btn3").onclick = function () {
-                if($(this).is(":checked")){
+                
                     document.getElementById("content").style.display = 'none';
-                }
+                
             };
  
             document.getElementById("btn6").onclick = function () {

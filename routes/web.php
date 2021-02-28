@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('layoutLogin.login');
 });
 
-
+Route::get('log-out','LoginController@logout');
 
 
 	Route::prefix('dang-ky')->group(function () {
@@ -41,7 +41,7 @@ Route::get('/', function () {
 //Route::get('/show-cart','CartController@show_cart');
 Route::post('/add-to-cart','CartController@add_to_cart');
 Route::post('/update-cart','CartController@update_cart');
-Route::get('cart-shopping','CartController@show_cart');
+Route::get('cart-shopping','CartController@show_cart')->name('cart-shopping');
 Route::get('delete-item-cart/{id}','CartController@delete_item_cart')->name('delete-item-cart');
 //Route::post('/dang-nhap','LoginController@success');
 Route::get('chi-tiet-san-pham/{id}','ProductController@detail_product');

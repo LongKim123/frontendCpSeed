@@ -29,18 +29,30 @@ class LoginController extends Controller
     	
     }
     public function success(Request $request){
+
     	$email=$request->email;
     	$password=$request->password;
     	$result=$this->customer->where('email',$email)->where('password',$password)->first();
-        
+        $cart=Session::get('cart');
     	if($result){
     		Session::put('name',$result->name);
     	 	Session::put('id',$result->id);
-    	 	return Redirect::to('trang-chu');
+            if($cart)
+            {
+                return Redirect::to('cart-shopping');
+            }
+            else{
+            return Redirect::to('trang-chu');
+            }
+    	 	
     	}
     	else
     	{
     		return redirect()->route('dang-ky');
     	}
+    }
+    public function logout(){
+        Session::put('id',null);
+          Session::put('name',null);
     }
 }
