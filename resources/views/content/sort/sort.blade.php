@@ -92,6 +92,23 @@
               </ul>
             </div>
           </aside>
+          <aside class="ps-widget--sidebar ps-widget--category">
+            <div class="ps-widget__header">
+              <h3>BRANDS</h3>
+            </div>
+            <div class="ps-widget__content">
+              <ul class="ps-list--checked">
+               @foreach($brands as $brandItem)
+                <li><label class="container">{{$brandItem->name}}
+                  <input id="btn2" type="checkbox" value="{{$brandItem->id}}" class="brand">
+                  <span class="checkmark"></span>
+                </label></li>
+                @endforeach
+
+                
+              </ul>
+            </div>
+          </aside>
           <aside class="ps-widget--sidebar ps-widget--filter">
             <div class="ps-widget__header">
               <h3>Price</h3>
@@ -100,24 +117,24 @@
               <ul class="ps-list--checked">
                 
                 <li><label class="container">Tất cả giá
-                  <input type="radio" checked="checked" value="0-1000000" id="btn1" class="price" name="radio">
+                  <input type="radio" checked="checked" value="0-1000000" id="btn3" class="price" name="radio">
                   <span class="checkmark"></span>
                 </label></li>
                 <li><label class="container">0-100000
-                  <input type="radio" value="0-100000" id="btn1"class="price" name="radio">
+                  <input type="radio" value="0-100000" id="btn3"class="price" name="radio">
                   <span class="checkmark"></span>
                 </label></li>
                 <li><label class="container">100000-200000
-                  <input type="radio" value="100000-200000" id="btn1" class="price" name="radio">
+                  <input type="radio" value="100000-200000" id="btn3" class="price" name="radio">
                   <span class="checkmark"></span>
                 </label></li>
                 
                 <li><label class="container">200000-300000
-                  <input type="radio" value="200000-300000" id="btn1" class="price" name="radio">
+                  <input type="radio" value="200000-300000" id="btn3" class="price" name="radio">
                   <span class="checkmark"></span>
                 </label></li>
                 <li><label class="container"> lớn hơn 300000
-                  <input type="radio"  value="300000-1000000" id="btn1" class="price" name="radio">
+                  <input type="radio"  value="300000-1000000" id="btn3" class="price" name="radio">
                   <span class="checkmark"></span>
                 </label></li>
 
@@ -127,6 +144,7 @@
             </div>
           
           </aside>
+
              <aside class="ps-widget--sidebar ps-widget--category">
             <div class="ps-widget__header">
               <h3>TAGS</h3>
@@ -135,7 +153,7 @@
               <ul class="ps-list--checked">
                @foreach($tag_name as $tagItem)
                 <li><label class="container">{{$tagItem->name}}
-                  <input type="checkbox" value="{{$cateItem->id}}" class="cate">
+                  <input type="checkbox" id="btn1" value="{{$cateItem->id}}" class="brand">
                   <span class="checkmark"></span>
                 </label></li>
                 @endforeach
@@ -155,10 +173,23 @@
  <script language="javascript">
  
             document.getElementById("btn1").onclick = function () {
-                document.getElementById("content").style.display = 'none';
+              if($(this).is(":checked")){
+                    document.getElementById("content").style.display = 'none';
+                }
+                
+            };
+             document.getElementById("btn2").onclick = function () {
+                if($(this).is(":checked")){
+                    document.getElementById("content").style.display = 'none';
+                }
+            };
+             document.getElementById("btn3").onclick = function () {
+                if($(this).is(":checked")){
+                    document.getElementById("content").style.display = 'none';
+                }
             };
  
-            document.getElementById("btn2").onclick = function () {
+            document.getElementById("btn6").onclick = function () {
                 document.getElementById("content").style.display = 'block';
             };
  
@@ -181,7 +212,7 @@
             console.log(first);
             console.log(last);
              
-             var pro=[];
+            var pro=[];
             $('.cate').each(function(){
                 if($(this).is(":checked")){
                     pro.push($(this).val());
@@ -191,11 +222,21 @@
         Finalpro=pro.toString();
         console.log(Finalpro);
 
+         var brands=[];
+            $('.brand').each(function(){
+                if($(this).is(":checked")){
+                    brands.push($(this).val());
+                }
+            });
+
+        Finalbrand=brands.toString();
+        console.log(Finalbrand);
+
         $.ajax({
             method:'get',
             dataType:'html',
             url:'{{url('/sort-di')}}',
-             data:{ brand: Finalpro,first:first,last:last},
+             data:{ brand: Finalpro,category:Finalbrand,first:first,last:last},
 
                     success: function (response) {
                        
