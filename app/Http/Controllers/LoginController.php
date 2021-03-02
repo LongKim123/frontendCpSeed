@@ -68,13 +68,20 @@ class LoginController extends Controller
     public function callback_facebook(){
         $provider = Socialite::driver('facebook')->user();
         $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
+         $cart=Session::get('cart');
         if($account){
             //login in vao trang quan tri  
             $account_name = Customer::where('id',$account->user)->first();
             
             Session::put('name',$account_name->name);
             Session::put('id',$account_name->id);
-            return redirect('gioi-thieu')->with('message', 'Đăng nhập tài khoản Facebook thành công');
+            if($cart)
+            {
+                return Redirect::to('cart-shopping');
+            }
+            else{
+            return Redirect::to('trang-chu');
+            }
         }else{
 
             $long = new Social([

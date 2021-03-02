@@ -24,25 +24,26 @@
                             <div class="form-group form-group--inline">
                               <label>UserName<span></span>
                               </label>
-                              <input class="form-control" value="{{$infor_user->name}}" type="text">
+                              <input class="form-control" value="{{$infor_user->name}}" readonly type="text">
                             </div>
                             
                             
                             <div class="form-group form-group--inline">
                               <label>Email Address<span></span>
                               </label>
-                              <input value="{{$infor_user->email}}" class="form-control" type="email">
+                              <input value="{{$infor_user->email}}"  class="form-control" readonly>
                             </div>
                             
                             <div class="form-group form-group--inline">
                               <label>Phone<span></span>
                               </label>
-                              <input class="form-control" name="phone_number" value="{{$infor_user->phone_number}}" type="text">
+
+                              <input class="form-control" id="phone_number" name="phone_number" value="{{$infor_user->phone_number}}" type="text">
                             </div>
                             <div class="form-group form-group--inline">
                               <label>Address<span></span>
                               </label>
-                              <input name="address" value="{{$infor_user->address}}" class="form-control" type="text">
+                              <input name="address" id="address" value="{{$infor_user->address}}" class="form-control" type="text">
                             </div>
                       <div class="form-group">
                         <div class="ps-checkbox">
@@ -72,6 +73,7 @@
                           $total+=$subtotal;
                         @endphp
                       @endforeach
+
                       <div class="content">
                         <table class="table ps-checkout__products">
                           <thead>
@@ -98,27 +100,34 @@
                       <footer>
                         <h3>Phương thức thanh toán</h3>
                                                 
+                          <div class="form-group paypal">
+                          <div class="ps-radio ps-radio--inline">
+                            <input class="form-control" type="radio" value="2" name="payment" id="rdo02" checked>
+                            <label for="rdo02">Paypal</label>
+                             
+                            @php
+                              $vnd_to_usd = $total/23083;
+                            @endphp
+                            
                           
-                          <div class="form-group cheque">
+                          <ul  class="ps-payment-method">
+                            <input type="hidden"  value="{{round($vnd_to_usd,2)}}" id="vnd_to_usd">
+                           
+                            <li><div id="paypal-button"></div> </li>
+                           
+                          </ul>
+                         
+                        </div>
+                      </div>
+                          <div  class="form-group cheque">
                           <div class="ps-radio">
-                            <input class="form-control" type="radio" id="rdo01" value="1" name="payment" checked>
+                            <input class="form-control" type="radio" id="rdo01" value="1" name="payment" >
                             <label for="rdo01">Thanh toán khi nhận hàng</label>
                             <p>Vui lòng kiểm tra thông tin bao gồm tên,địa chỉ ,số điện thoại một cách chính xác</p>
                           </div>
+                           <button class="ps-btn ps-btn--fullwidth">Đặt Hàng<i class="ps-icon-next"></i></button>
                         </div>
-                        <div class="form-group paypal">
-                          <div class="ps-radio ps-radio--inline">
-                            <input class="form-control" type="radio" value="2" name="payment" id="rdo02">
-                            <label for="rdo02">Paypal</label>
-                          </div>
-                          <ul class="ps-payment-method">
-                            <li><a href="#"><img src="{{asset('sort/images/payment/1.png')}}" alt=""></a></li>
-                            <li><a href="#"><img src="{{asset('sort/images/payment/2.png')}}" alt=""></a></li>
-                            <li><a href="#"><img src="{{asset('sort/images/payment/3.png')}}" alt=""></a></li>
-                          </ul>
-                          <button class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
-                        </div>
-
+                        
                         
                         
                         
@@ -134,9 +143,74 @@
       </div>
 @endsection
 @section('js')
- <script language="javascript">
+<script language="javascript">
  
-           
-    </script>
+            document.getElementById("rdo01").onclick = function () {
+              
+                    document.getElementById("paypal-button").style.display = 'none';
+                
+                
+            };
+             document.getElementById("rdo02").onclick = function () {
+                document.getElementById("paypal-button").style.display = 'block';
+            };
+        
+ 
+        </script>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+  var usd= document.getElementById("vnd_to_usd").value;
+  var phone_number=document.getElementById("phone_number").value;
+  var phone_number_r='';
+  var address=document.getElementById("address").value;
+  var payment=document.getElementById("rdo02").value;
+  console.log(phone_number);
+  $('.phone_number').each(function(){
+                if($(this)){
+                    phone_number_r.$(this).val();
+                    phone_number_r.toString();
+                    console.log(phone_number_r);
+                }
+            });
+  paypal.Button.render({
+    // Configure environment
+    env: 'sandbox',
+    client: {
+      sandbox: 'AakOHX9nznvv-oVrYjz7jh7Q2Jowa7YxVhif_g_YezfbuDESpaDgapg6wpRm3c5VHzmAeP9SG0onsGVq',
+      production: 'demo_production_client_id'
+    },
+    // Customize button (optional)
+    locale: 'en_US',
+    style: {
+      size: 'large',
+      color: 'gold',
+      shape: 'pill',
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+    // Set up a payment
+    payment: function(data, actions) {
+      return actions.payment.create({
+        transactions: [{
+          amount: {
+            total: `${usd}`,
+            currency: 'USD'
+          }
+        }]
+      });
+    },
+    // Execute the payment
+    onAuthorize: function(data, actions) {
+      return actions.payment.execute().then(function() {
+        // Show a confirmation message to the buyer
+        console.log(phone_number);
+      });
+    }
+  }, '#paypal-button');
+
+</script>
 
 @endsection
