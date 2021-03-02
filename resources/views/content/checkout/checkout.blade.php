@@ -14,7 +14,7 @@
 
 <div class="ps-checkout pt-80 pb-80">
         <div class="ps-container">
-          <form class="ps-checkout__form" action="{{URL::to('save-checkout')}}" method="post">
+          <form class="ps-checkout__form" action="{{URL::to('/paypal')}}" method="post">
             @csrf
             <div class="row">
                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
@@ -24,26 +24,25 @@
                             <div class="form-group form-group--inline">
                               <label>UserName<span></span>
                               </label>
-                              <input class="form-control" value="{{$infor_user->name}}" readonly type="text">
+                              <input class="form-control" value="{{$infor_user->name}}" type="text">
                             </div>
                             
                             
                             <div class="form-group form-group--inline">
                               <label>Email Address<span></span>
                               </label>
-                              <input value="{{$infor_user->email}}"  class="form-control" readonly>
+                              <input value="{{$infor_user->email}}" class="form-control" type="email">
                             </div>
                             
                             <div class="form-group form-group--inline">
                               <label>Phone<span></span>
                               </label>
-
-                              <input class="form-control" id="phone_number" name="phone_number" value="{{$infor_user->phone_number}}" type="text">
+                              <input class="form-control" name="phone_number" value="{{$infor_user->phone_number}}" type="text">
                             </div>
                             <div class="form-group form-group--inline">
                               <label>Address<span></span>
                               </label>
-                              <input name="address" id="address" value="{{$infor_user->address}}" class="form-control" type="text">
+                              <input name="address" value="{{$infor_user->address}}" class="form-control" type="text">
                             </div>
                       <div class="form-group">
                         <div class="ps-checkbox">
@@ -73,7 +72,6 @@
                           $total+=$subtotal;
                         @endphp
                       @endforeach
-
                       <div class="content">
                         <table class="table ps-checkout__products">
                           <thead>
@@ -111,9 +109,9 @@
                             
                           
                           <ul  class="ps-payment-method">
-                            <input type="hidden"  value="{{round($vnd_to_usd,2)}}" id="vnd_to_usd">
+                            <input type="hidden"  value="{{round($vnd_to_usd,2)}}" name="vnd_to_usd">
                            
-                            <li><div id="paypal-button"></div> </li>
+                            <li><a href>email me</a> </li>
                            
                           </ul>
                          
@@ -161,18 +159,7 @@
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
   var usd= document.getElementById("vnd_to_usd").value;
-  var phone_number=document.getElementById("phone_number").value;
-  var phone_number_r='';
-  var address=document.getElementById("address").value;
-  var payment=document.getElementById("rdo02").value;
-  console.log(phone_number);
-  $('.phone_number').each(function(){
-                if($(this)){
-                    phone_number_r.$(this).val();
-                    phone_number_r.toString();
-                    console.log(phone_number_r);
-                }
-            });
+
   paypal.Button.render({
     // Configure environment
     env: 'sandbox',
@@ -206,7 +193,7 @@
     onAuthorize: function(data, actions) {
       return actions.payment.execute().then(function() {
         // Show a confirmation message to the buyer
-        console.log(phone_number);
+        window.alert('');
       });
     }
   }, '#paypal-button');
