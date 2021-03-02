@@ -54,7 +54,7 @@ Route::get('gioi-thieu','HomeController@introduction')->name('gioi-thieu');
 //sort
 Route::get('product-listing','ProductController@product_listing');
 Route::get('/sort-di','ProductController@sort_di');
-Route::get('/checkout','CheckoutController@index');
+Route::get('/checkout','CheckoutController@index')->name('/checkout');
 Route::post('/save-checkout','CheckoutController@save_checkout');
 Route::post('/paypal','CheckoutController@paypal');
 Route::get('/paypal/return',[\App\Http\Controllers\CheckoutController::class,'paypalReturn'])->name('paypal_return');

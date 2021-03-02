@@ -171,8 +171,9 @@ class CheckoutController extends Controller
             $result = $payment->execute($execution, $apiContext);
              $phone_number= $_GET['phone_number'];
              $payment_method= $_GET['payment_method'];
-             $node_order= $_GET['node_order'];
+             
              $address= $_GET['address'];
+             
              $datapayment=array();
             $datapayment['method']=$payment_method;
             $datapayment['status']=1;
@@ -196,14 +197,14 @@ class CheckoutController extends Controller
         }
         
         $order_data=array();
-          if( $node_order!=null){
+          if(isset($_GET['node_order'])){
                 $order_data['created_at'] =new \DateTime();
                 $order_data['customer_id']=Session::get('id');
                 $order_data['shipping_id']=1;
                 $order_data['payment_id']=$payment_id;
                 $order_data['order_total']=$total;
                 $order_data['order_status']=1;
-                $order_data['node_order']=$node_order ;  
+                $order_data['node_order']=$_GET['node_order'] ;  
                 
                 $order_id=Order::insertGetId($order_data);
           }
@@ -243,7 +244,7 @@ class CheckoutController extends Controller
         }
     }
     public function paypalCancel(){
-        return "order canceled";
+        return redirect()->route('/checkout');
     }
 
 }

@@ -14,7 +14,7 @@
 
 <div class="ps-checkout pt-80 pb-80">
         <div class="ps-container">
-          <form class="ps-checkout__form" action="{{URL::to('/paypal')}}" method="post">
+          <form  class="ps-checkout__form" action="" id="button" method="post">
             @csrf
             <div class="row">
                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
@@ -72,6 +72,9 @@
                           $total+=$subtotal;
                         @endphp
                       @endforeach
+                       @php
+                          $vnd_to_usd = $total/23083;
+                      @endphp
                       <div class="content">
                         <table class="table ps-checkout__products">
                           <thead>
@@ -82,15 +85,19 @@
                           <tbody>
                             <tr>
                               <td>Tạm tính</td>
-                              <td>{{$total}}</td>
+                              <td>{{number_format($total)}}VNĐ</td>
                             </tr>
                              <tr>
                               <td>Giảm giá</td>
-                              <td>0</td>
+                              <td>0VNĐ</td>
                             </tr>
                             <tr>
                               <td>Tổng tiền</td>
-                              <td>{{$total}}</td>
+                              <td>{{number_format($total)}}VNĐ</td>
+                            </tr>
+                            <tr>
+                              <td>Thanh toán quốc tế</td>
+                              <td>{{round($vnd_to_usd,2)}}USD</td>
                             </tr>
                           </tbody>
                         </table>
@@ -100,20 +107,19 @@
                                                 
                           <div class="form-group paypal">
                           <div class="ps-radio ps-radio--inline">
-                            <input class="form-control" type="radio" value="2" name="payment" id="rdo02" checked>
+                            <input class="form-control" type="radio" id="rdo02" value="2" name="payment"  >
                             <label for="rdo02">Paypal</label>
                              
-                            @php
-                              $vnd_to_usd = $total/23083;
-                            @endphp
+                           
                             
                           
                           <ul  class="ps-payment-method">
-                            <input type="hidden"  value="{{round($vnd_to_usd,2)}}" name="vnd_to_usd">
+                            <input type="hidden"  value="{{round($vnd_to_usd,2)}}" name="vnd_to_usd" >
                            
-                            <li><a href>email me</a> </li>
+                          
                            
                           </ul>
+                            <button  style="display:none;" id="btn_paypal" class="ps-btn ps-btn--fullwidth">Thanh Toán Bằng Paypal<i class="ps-icon-next"></i></button>
                          
                         </div>
                       </div>
@@ -123,7 +129,8 @@
                             <label for="rdo01">Thanh toán khi nhận hàng</label>
                             <p>Vui lòng kiểm tra thông tin bao gồm tên,địa chỉ ,số điện thoại một cách chính xác</p>
                           </div>
-                           <button class="ps-btn ps-btn--fullwidth">Đặt Hàng<i class="ps-icon-next"></i></button>
+
+                           <button  id="btn_dathang" style="display:none;" class="ps-btn ps-btn--fullwidth">Đặt Hàng<i class="ps-icon-next"></i></button>
                         </div>
                         
                         
@@ -144,60 +151,22 @@
 <script language="javascript">
  
             document.getElementById("rdo01").onclick = function () {
-              
-                    document.getElementById("paypal-button").style.display = 'none';
+                    document.getElementById("btn_dathang").style.display = 'block';
+                     document.getElementById("btn_paypal").style.display = 'none';
+                    document.getElementById("button").action = '{{URL::to('/save-checkout')}}';
                 
                 
             };
              document.getElementById("rdo02").onclick = function () {
-                document.getElementById("paypal-button").style.display = 'block';
+                document.getElementById("btn_paypal").style.display = 'block';
+                 document.getElementById("btn_dathang").style.display = 'none';
+                document.getElementById("button").action = '{{URL::to('/paypal')}}';
             };
         
  
         </script>
 
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-<script>
-  var usd= document.getElementById("vnd_to_usd").value;
 
-  paypal.Button.render({
-    // Configure environment
-    env: 'sandbox',
-    client: {
-      sandbox: 'AakOHX9nznvv-oVrYjz7jh7Q2Jowa7YxVhif_g_YezfbuDESpaDgapg6wpRm3c5VHzmAeP9SG0onsGVq',
-      production: 'demo_production_client_id'
-    },
-    // Customize button (optional)
-    locale: 'en_US',
-    style: {
-      size: 'large',
-      color: 'gold',
-      shape: 'pill',
-    },
-
-    // Enable Pay Now checkout flow (optional)
-    commit: true,
-
-    // Set up a payment
-    payment: function(data, actions) {
-      return actions.payment.create({
-        transactions: [{
-          amount: {
-            total: `${usd}`,
-            currency: 'USD'
-          }
-        }]
-      });
-    },
-    // Execute the payment
-    onAuthorize: function(data, actions) {
-      return actions.payment.execute().then(function() {
-        // Show a confirmation message to the buyer
-        window.alert('');
-      });
-    }
-  }, '#paypal-button');
-
-</script>
 
 @endsection
